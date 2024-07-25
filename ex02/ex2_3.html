@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연습 3</title>
+
+    <script src="moment.min.js"></script>
+</head>
+<body>
+    <h1>연습 3</h1>
+
+    <div>
+        <input type="radio" name="gender" value="man" checked><span>남자</span>
+        <input type="radio" name="gender" value="woman"><span>여자</span>
+    </div>
+
+    <div id="output1">
+        
+    </div>
+
+    <div>
+        <button onclick="show()">확인</button>
+    </div>
+
+    <script>
+        function show () {
+            const radios = document.getElementsByName('gender');
+            const selected = Array.from(radios).find(elem => elem.checked);
+            console.log(`선택한 값이 : ${selected.value}`);
+
+            if (selected.value == 'man') {
+                console.log(`남자가 선택되었습니다.`);
+            } else if (selected.value == 'woman') {
+                console.log(`여자가 선택되었습니다.`);
+            }
+
+            const output1 = document.querySelector('#output1');
+            // moment 사용하기
+            setInterval(() => {
+                const curTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                output1.innerHTML = `<p>${curTime}</p>`;
+            }, 1000);
+            
+        }
+    </script>
+
+</body>
+</html>

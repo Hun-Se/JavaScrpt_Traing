@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>입장료계산기</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>입장료 계산기</h1>
+        </header>
+        <main>
+            <div>
+                <div class="count-input-container">
+
+                    <label for="adult-count">성인 수</label>
+                    <input id="adult-count" type="number" value="0">
+                    <span>명</span>
+
+                    <label for="kids-count" for="">어린이 수</label>
+                    <input id="kids-count" type="number" value="0">
+                    <span>명</span>
+
+                    <button class="calc-btn">계산</button>
+                </div>
+                
+                <div>
+                    <label for="total-fee">입장료</label>
+                    <input id="total-fee" type="text" readonly>
+                    <span>원</span>
+                    <img class="fee-img" src="images/cat_run.png" alt="">
+                </div>
+                <div>
+                    <span>단체할인</span>
+                    <label>
+                        <input class="discount" type="radio" name="group-discount" value="yes"> 
+                        예
+                    </label>
+                    <label>
+                        <input class="none-discount" type="radio" name="group-discount" value="no">
+                        아니요
+                    </label>
+                </div>
+                <div class="fee-input-container">
+
+                    <div>
+                        <label for="adult-fee">성인 1인당</label>
+                        <input id="adult-fee" type="text">
+                        <span>원</span>
+                    </div>
+                    <div>
+                        <label for="kids-fee" for="">어린이 1인당</label>
+                        <input id="kids-fee" type="text">
+                        <span>원</span>
+                    </div>
+                    <p>단체 할인: 5명 이상 20%</p>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    
+    
+    <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>연습 2</title>
+
+        <style>
+            p {
+                border: 2px solid blue; /* 테두리선 2px 두께, 실선으로, 파란색*/
+            }
+
+            span {
+                border: 2px solid green;
+            }
+
+            img {
+                border: 2px solid red;
+            }
+
+            .spinner {
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                border: 10px solid blue;
+                border-bottom-color: white;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: 50% auto;
+                animation: rotation 1s linear infinite;
+            }
+
+            @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    } 
+
+        </style>
+    </head>
+    <body>
+        <h1>연습 두번째</h1>
+        
+        <div>
+            <p>연습입니다.</p> <p>연습입니다.2</p> <p>연습입니다.3</p>
+        </div>
+
+        <div>
+            <span>테스트입니다.</span>
+            <span>테스트입니다. 2</span>
+            <span>테스트입니다. 3</span>
+        </div>
+
+        <div>
+            <img src="images/dog_stand.png" alt="">
+            <img src="images/dog_sit.png" alt="">
+            <img src="images/dog_run.png" alt="">
+        </div>
+        
+        <div>
+            <input type="text" value="홍길동1" id="input1">
+            <input type="text" value="21">
+            <input type="text" value="010-0000-0000">
+        </div>
+
+        <button onclick=show()>확인</button>
+
+        <!-- <div class="spinner">/ -->
+            
+        </div>
+
+        <div id="output1"></div>
+
+        <script>
+            function show () {
+                console.log('버튼이 눌렸어요');
+                const input1 = document.querySelector('#input1');
+                document.
+                console.log(input1.value);
+                const output1 = document.querySelector('#output1');
+                output1.innerHTML = `<p>입력한 값: ${input1.value}</p>`;
+            }
+        </script>
+    </body>
+</html>
