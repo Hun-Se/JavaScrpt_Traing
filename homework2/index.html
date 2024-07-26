@@ -4,16 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
+    <script src="moment.min.js"></script>
     <title>입장료계산기</title>
 
     <style>
-        .round {
-            background-color: red;
+        .prize-container {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .ball {
+            border: 2px solid lightcoral;
             width: 50px;
             height: 50px;
             border-radius: 50%;
             text-align: center;
             line-height: 50px;
+            margin: 2px;
         }
     </style>
 </head>
@@ -23,81 +30,83 @@
             <h1>입장료 계산기</h1>
         </header>
         <main>
-            <div>
-                <div class="count-input-container">
-                    <label for="adult-count">성인 수</label>
-                    <input id="adult-count" type="number" value="0">
-                    <span>명</span>
-
-                    <label for="kids-count" for="">어린이 수</label>
-                    <input id="kids-count" type="number" value="0">
-                    <span>명</span>
-
-                    <button class="calc-btn">계산</button>
-                </div>
-                
-                <div>
-                    <label for="total-fee">입장료</label>
-                    <input id="total-fee" type="text" readonly>
-                    <span>원</span>
-                    <img class="fee-img" src="images/cat_run.png" alt="">
-                </div>
-                <div>
-                    <span>단체할인</span>
-                    <label>
-                        <input class="discount" type="radio" name="group-discount" value="yes"> 
-                        예
-                    </label>
-                    <label>
-                        <input class="none-discount" type="radio" name="group-discount" value="no">
-                        아니요
-                    </label>
-                </div>
-                <div class="fee-input-container">
-
+            <form >
+                <div class="calc-container">
+                    <div class="count-input-container">
+                        <div class="time-container"></div>
+                        <label for="adult-count">성인 수</label>
+                        <input id="adult-count" required type="number" value="0">
+                        <span>명</span>
+    
+                        <label for="kids-count" for="">어린이 수</label>
+                        <input id="kids-count" required type="number" value="0">
+                        <span>명</span>
+    
+                        <button class="calc-btn">계산</button>
+                    </div>
+                    
                     <div>
-                        <label for="adult-fee">성인 1인당</label>
-                        <input id="adult-fee" type="text">
+                        <label for="total-fee">입장료</label>
+                        <input id="total-fee"  type="text" readonly>
                         <span>원</span>
+                        <img class="fee-img" src="images/cat_run.png" alt="">
                     </div>
                     <div>
-                        <label for="kids-fee" for="">어린이 1인당</label>
-                        <input id="kids-fee" type="text">
-                        <span>원</span>
+                        <span>단체할인</span>
+                        <label>
+                            <input class="discount" type="radio" name="group-discount" value="yes"> 
+                            예
+                        </label>
+                        <label>
+                            <input class="none-discount" type="radio" name="group-discount" value="no" checked>
+                            아니요
+                        </label>
                     </div>
-                    <p>단체 할인: 5명 이상 20%</p>
-                </div>
-
-                <div class="night-container">
-                    <h2>야간 할인</h2>
-                    <div>
-                        <label for="night-adult-fee">성인 1인당</label>
-                        <input id="night-adult-fee" type="text">
-                        <span>원</span>
+                    <div class="fee-input-container">
+    
+                        <div>
+                            <label for="adult-fee">성인 1인당</label>
+                            <input id="adult-fee" required type="text">
+                            <span>원</span>
+                        </div>
+                        <div>
+                            <label for="kids-fee" for="">어린이 1인당</label>
+                            <input id="kids-fee" required type="text">
+                            <span>원</span>
+                        </div>
+                        <p>단체 할인: 5명 이상 20%</p>
                     </div>
-                    <div>
-                        <label for="night-kids-fee" for="">어린이 1인당</label>
-                        <input id="night-kids-fee" type="text">
-                        <span>원</span>
+    
+                    <div class="night-container">
+                        <h2>야간 할인</h2>
+                        <div>
+                            <label for="night-adult-fee">성인 1인당(야간)</label>
+                            <input id="night-adult-fee" required type="text">
+                            <span>원</span>
+                        </div>
+                        <div>
+                            <label for="night-kids-fee" for="">어린이 1인당(야간)</label>
+                            <input id="night-kids-fee" required type="text">
+                            <span>원</span>
+                        </div>
+                        <p>오후 6시부터 야간 할인이 적용됩니다.</p>
                     </div>
-                    <p>오후 6시부터 야간 할인이 적용됩니다.</p>
                 </div>
 
                 <div class="event-container">
                     <div>
                         <h2>이벤트</h2>
                         <label for="entering-input"></label>
-                        <input id="entering-input" type="text">
-                        <button>추첨하기</button>
+                        <input id="entering-input" type="text" required>
+                        <button class="random-event-btn">추첨하기</button>
                     </div>
-                    <div>
-                        <span>당첨자</span>
-                    </div>
+                    <span>당첨자</span>
+                    <div class="prize-container"></div>
                     <p>입장하시는 분들은 번호표를 받으세요.</p>
                     <p>여섯 분을 추첨하여 스타벅스 쿠폰을 드립니다.</p>
                 </div>
                 <div class="round">hi</div>
-            </div>
+            </form>
         </main>
     </div>
     
