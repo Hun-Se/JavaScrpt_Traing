@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>고객 목록</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <style>
+            #page1 {
+                display: block;
+            }
+
+            #page2 {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div class="container">
+
+            <!-- 카드 START -->
+            <div class="card mt-4" id="page1">
+
+                <!-- 카드 START -->
+                <div class="card-body">
+
+                    <!-- 리스트 START -->
+                    <ul class="list-group" id="list1">
+
+                    </ul>
+                    <!-- 리스트 END -->
+
+                </div>
+                <!-- 카드 몸 END -->
+                
+                <!-- 카드 꼬리 START-->
+                <div class="card-footer">
+                    <!-- 페이지표시 start -->
+                    <nav class="d-flex justify-content-center">
+                        <ul class="pagination">
+                            <li class="page-item disabled">
+                                <a class="page-link">이전</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item" aria-current="page">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">다음</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- 페이지표시 END -->
+                    
+
+                    <div class="d-flex justify-content-end mt-3 mb-3">
+                        <button class="btn btn-primary fw-bold" id="addButton">추가하기</button>
+                    </div>
+
+                </div>
+                <!-- 카드 꼬리 END -->
+
+            </div>
+            <!-- 카드 END -->
+
+        </div>
+        <!-- 고객 목록 화면 END -->
+
+        <!-- 고객 추가 화면 START -->
+        <div class="container" id="page2">
+
+            <div class="card mt-4">
+                <div class="card-header text-center">
+                    <span class="fs-4 fw-bold card-title">고객 추가</span>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row mt-4 g-3 align-items-center">
+                        <div class="col-auto">
+                          <label for="input1" class="col-form-label">이름</label>
+                        </div>
+                        <div class="col-auto">
+                          <input type="text" id="input1" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row mt-4 g-3 align-items-center">
+                        <div class="col-auto">
+                          <label for="input2" class="col-form-label">전화번호</label>
+                        </div>
+                        <div class="col-auto">
+                          <input type="text" id="input2" class="form-control">
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="btn btn-primary btn-sm fw-bold" id="saveButton">저장</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-secondary btn-sm fw-bold" id="closeButton">닫기</button>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+
+        </div>
+        <!-- 고객 추가 화면 END -->
+        
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script>
+
+            let page1;
+            let page2;
+
+            // 입력상자
+            let input1;
+            let input2;
+
+            let list1;
+
+            let persons = [];
+
+            let cardTitle;
+            let editButton;
+            let saveButton;
+            
+            let mode;
+
+            // 선턱된 아이템의 인덱스를 넣어둘 변수
+            let selected = -1;
+
+            // 웹 문서가 보이기 전에 한 번 실행됨
+            window.addEventListener('DOMContentLoaded', () => {
+
+                // 페이지 태그를 찾아서 변수에 넣어두기
+                page1 = document.querySelector('#page1');
+                page2 = document.querySelector('#page2');
+
+                // 입력상자를 찾아서 변수에 넣어두기
+                input1 = document.querySelector('#input1');
+                input2 = document.querySelector('#input2');
+               
+                // 리스트를 찾아서 변수에 넣어두기
+                list1 = document.querySelector('#list1');
+
+                // 카드 타이틀
+                cardTitle = document.querySelector('.card-title');
+
+                //에딧 버튼
+                editButton = document.querySelector('#editButton');
+
+
+
+                // 버튼이 눌렸을 때 동작할 함수 예약하기
+                const addButton = document.querySelector('#addButton');
+                addButton.addEventListener('click', showAddPage);
+
+                saveButton = document.querySelector('#saveButton');
+                saveButton.addEventListener('click', saveItem);
+
+                const closeButton = document.querySelector('#closeButton');
+                closeButton.addEventListener('click', show1);
+            });
+
+            function saveItem() {
+                if (mode == 'add') {
+                    addItem();
+                } else if(mode == 'modify') {
+                    modifyItem();
+                }
+            }
+
+            // 고객추가 화면에서 저장 버튼 눌렀을 때
+            function addItem() {
+                // 사용자가 입력한 글자 가져오기
+                // cardTitle.innerHTML = `<span class="fs-4 fw-bold card-title">고객 등록</span>`;
+
+                const name = input1.value;
+                const mobile = input2.value;
+
+                const index = persons.length;
+
+
+
+                list1.innerHTML += `<li class="list-group-item" id="item${index}">
+                            <div class="row d-flex align-items-center">
+                                <div class="col-1">
+                                    <img src="images/person.png" class="rounded-circle" style="width: 4em; height: 4em;" alt="">
+                                </div>
+                                <div class="col-4">
+                                    <p id="item${index}_name">${name}</p>
+                                </div>
+                                <div class="col-4">
+                                    <p id="item${index}_mobile">${mobile}</p>
+                                </div>
+                                <div class="col-3">
+                                    <button class="btn btn-primary btn-sm fw-bold" onclick="showModifyPage(${index})">수정</button>
+                                    <button class="btn btn-danger btn-sm fw-bold" onclick="deleteItem(${index})">삭제</button>
+                                </div>
+                            </div>
+                        </li>`;
+                
+                input1.value = ''
+                input2.value = ''
+                
+                persons.push({
+                    name: name,
+                    mobile: mobile
+                })
+                show1();
+            }
+
+            function modifyItem() {
+                const itemName = document.querySelector(`#item${selected}_name`);
+                const itemMobile = document.querySelector(`#item${selected}_mobile`);
+
+                const name = input1.value;
+                const mobile = input2.value;
+
+                itemName.innerHTML = name;
+                itemMobile.innerHTML = mobile;
+
+                persons[selected].name = name;
+                persons[selected].mobile = mobile;
+
+                show1();
+            }
+
+            function deleteItem(index) {
+                console.log(index);
+                console.log(`#item${index}`);
+                const item = document.querySelector(`#item${index}`);
+                console.log(item);
+                item.remove();
+
+
+                persons.splice(index, 1);
+            }
+
+            function showModifyPage(index) {
+
+                // 고객 추가 화면의 제목 변경
+                cardTitle.innerHTML = '고객 수정'
+
+                mode = 'modify';
+                selected = index;
+                
+                const person = persons[index];
+
+                input1.value = person.name;
+                input2.value = person.mobile;
+
+                show2();
+            
+            }
+
+            function show1() {
+                page1.style.display = 'block';
+                page2.style.display = 'none';
+            }
+
+            function show2() {
+                page1.style.display = 'none';
+                page2.style.display = 'block';
+            }
+
+            function showAddPage() {
+                cardTitle = "고객 추가";
+                mode = 'add';
+                
+
+                show2();
+            }
+
+
+            // function showEditPage() {
+            //     mode = 'modify';
+            //     cardTitle.innerHTML = `<span class="fs-4 fw-bold card-title">고객 수정</span>`
+            //     page1.style.display = 'none';
+            //     page2.style.display = 'block';
+            //     // saveButton.style.display = 'none';
+            //     // editButton.style.display = 'block';
+            // }
+
+        </script>
+    </body>
+</html>

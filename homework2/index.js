@@ -1,5 +1,3 @@
-
-
 const getMoment = () => {
     return moment().format('YYYY-MM-DD HH:MM:ss');
 }

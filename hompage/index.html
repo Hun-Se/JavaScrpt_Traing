@@ -257,7 +257,7 @@
         </div>
         <div class="gallary-container container text-center p-5">
             <h2 class="sub-title en fs-6 mb-1 crimson">GALLARY</h2>
-            <h2 class="title fs-5 mb-5 ">갤러리</h2>
+            <h2 class="title fs-5 mb-5">갤러리</h2>
 
             <div class="row row-cols-2">
                 <div class="col-6 p-3 img-wrapper">
@@ -325,64 +325,87 @@
             </div>
         </div>
 
-        <div>
-            <p>LOCATION</p>
-            <h2>오시는 길</h2>
+        <div class="container text-center">
+            <h2 class="sub-title en fs-6 mb-1 crimson">LOCATION</h2>
+            <h2 class="title fs-5 mb-5">오시는 길</h2>
             <p>메종글래드 B2 홀</p>
             <p>제주특별자치도 제주시 노연로 80</p>
         </div>
 
-        <div>
-            카카오지도
-            <div>
-                <button>네이버 지도</button>
-                <button>카카오 지도</button>
-                <button>티맵</button>
+        <div class="d-flex justify-content-center">
+            <div class="map-container" style="max-width: 300px;">
+                <div id="map" style="width:300px; height:400px;">
+                </div>
             </div>
         </div>
 
-        <div>
+        <div class="d-flex justify-content-center map-btn-container mt-3">
             <div>
-                <div>아이콘</div>
+                <button class="btn-naver btn btn-outline-primary mx-1">네이버맵</button>
             </div>
             <div>
-                <h3>버스</h3>
-                 <p>제원사거리 버스정류장</p>
-                 <p>121, 141, 145, 148, 463</p>
+                <button class="btn-kakao btn btn-outline-primary  mx-1">카카오맵</button>
+            </div>
+            <div>
+                <button class="btn-tmap btn btn-outline-primary  mx-1">티맵</button>
+            </div>
+        </div>
 
-                 <p>메종글래드 버스정류장</p>
-                 <p>2015, 2234, 2413</p>
+        <div class="container mt-4 road-container">
+            <div class="row">
+                <div class="col-4 d-flex justify-content-center">
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-bus"></i>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <h3 class="title fs-6">버스</h3>
+                     <p>제원사거리 버스정류장</p>
+                     <p>121, 141, 145, 148, 463</p>
+    
+                     <p>메종글래드 버스정류장</p>
+                     <p>2015, 2234, 2413</p>
+                </div>
             </div>
         </div>
-        <div>
-            <div>아이콘</div>
-            <div>
-                <h2>주차 안내</h2>
-                <p>건물 내 B3-B7 2시간 무료주차</p>
-                <p>안내 데스크에서 주차권 수령</p>
+        <div class="container mt-3 mb-5">
+            <div class="row">
+                <div class="col-4 d-flex justify-content-center">
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-square-parking"></i>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <h3 class="title fs-6">주차 안내</h2>
+                    <p>건물 내 B3-B7 2시간 무료주차</p>
+                    <p>안내 데스크에서 주차권 수령</p>
+                </div>
             </div>
         </div>
-        <div>
-            <p>INFORMATION</p>
-            <h2>예식정보 및 안내사항</h2>
-            <div>
+        <div class="text-center info-container">
+            <p class="sub-title en fs-6 mb-1 crimson">INFORMATION</p>
+            <h2 class="title fs-5 mb-5">예식정보 및 안내사항</h2>
+            <div class="p-3">
                 <div class="card text-center">
-                    <div class="card-header">
+                    <div class="card-header card-background rounded-top">
                       <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
-                          <a class="nav-link active" aria-current="true" href="#">Active</a>
+                          <a class="nav-link active" href="#">포토부스</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#">Link</a>
+                          <a class="nav-link" href="#">식사안내</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                          <a class="nav-link">주차안내</a>
                         </li>
                       </ul>
                     </div>
                     <div class="card-body">
-                      <h5 class="card-title">Special title treatment</h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                      <img src="images/photo.jpg" alt="">
+                      <p class="card-text">포토부스가 설치될 예정입니다.</p>
+                      <p class="card-text">귀한 발검음 해주신 여러분의</p>
+                      <p class="card-text">환한 미소와 따뜻한 말씀 남겨주시면</p>
+                      <p class="card-text">소중히 간직하도록 하겠습니다.</p>
                       <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
                   </div>
@@ -433,7 +456,22 @@
         
         <address> &copy;저작권 관련 정보를 작성해도 상관 없습니다.</address>
     </div>
-
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0aa361740fabbc0c74b6275846cf3ba8"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        var container = document.getElementById('map');
+        var options = { 
+            center: new kakao.maps.LatLng(33.484864594123856, 126.48855923312743), 
+            level: 3
+        };
+        var map = new kakao.maps.Map(container, options); 
+        var markerPosition  = new kakao.maps.LatLng(33.484864594123856, 126.48855923312743); 
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+
+        marker.setMap(map);
+        </script>
 </body>
 </html>

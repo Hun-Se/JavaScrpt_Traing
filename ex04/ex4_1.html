@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>연습 1</title>
+    </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .area {
+            border: 2px solid blue;
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: relative;
+            top: 0px;
+            left: 0px;
+        }
+
+        #page1 {
+            background-color: rgba(255, 0, 0, 0.5);
+            display: block;
+            /* background-color: lightblue; */
+            /* opacity: 0.5; */
+        }
+
+        #page2 {
+            background-color: rgba(0, 255, 0, 0.5);
+            display: none;
+        }
+
+        #page3 {
+            background-color: rgba(0, 0, 255, 0.5);
+            display: none;
+        }
+
+    </style>
+    <!--<body onload="onCreated()">-->
+        <body>
+        <div class="container">
+
+            <div>
+                <!--
+                <button onclick="show1()">첫번째</button>
+                <button onclick="show2()">두번째</button>
+                <button onclick="show3()">세번째</button> 
+                -->
+
+                <!-- <button id="button1">첫번째</button>
+                <button id="button2">두번째</button>
+                <button id="button3">세번째</button> -->
+
+                <button class="back-btn">이전</button>
+                <button class="next-btn">다음</button>
+            </div>
+            <div class="area" id="page1">
+                <button id="previousButton1">이전</button>
+                <button id="nextButton1">다음</button>
+                <img src="images/dog_stand.png" alt="">
+                <p>강아지1</p>
+            </div>
+            <div class="area" id="page2">
+                <button id="previousButton2">이전</button>
+                <button id="nextButton2">다음</button>
+                <img src="images/dog_sit.png" alt="">
+                <p>강아지2</p>
+            </div>
+            <div class="area" id="page3">
+                <div>
+                    <button id="previousButton3">이전</button>
+                    <button id="nextButton3">다음</button>
+                </div>
+                <img src="images/dog_run.png" alt="">
+                <p>강아지3</p>
+            </div>
+        </div>
+
+        <script>
+
+            let page1;
+            let page2;
+            let page3;
+
+            let backBtn;
+            let nextBtn;
+
+
+            window.addEventListener('DOMContentLoaded', () => {
+                console.log('DOMContentLoad됨');
+                onCreated();
+            });
+
+            function onCreated() {
+                console.log('onCreated 호출됨.');
+                page1 = document.querySelector('#page1');
+                page2 = document.querySelector('#page2');
+                page3 = document.querySelector('#page3');
+
+                backBtn = document.querySelector('.back-btn');
+                nextBtn = document.querySelector('.next-btn');
+
+                const arrDom = [page1, page2, page3];
+                let index = 0;
+
+                backBtn.addEventListener('click', (e) => {
+                    if (0 < index) {
+                        index -=1;
+                    }
+                    arrDom[index+1].style.display = 'none';
+                    arrDom[index].style.display = 'block';
+                })
+                
+                
+                nextBtn.addEventListener('click', (e) => {
+                    if (index < arrDom.length-1) {
+                        index +=1;
+                    }
+                    arrDom[index-1].style.display = 'none';
+                    arrDom[index].style.display = 'block';
+                });
+
+                // const button1 = document.querySelector('#button1');
+                
+                // button1.addEventListener('click', show1)
+
+
+                // const button2 = document.querySelector('#button2');
+                // button2.addEventListener('click', show2)
+
+                // const button3 = document.querySelector('#button3');
+                // button3.addEventListener('click', show3);
+
+
+                const previousButton1 = document.querySelector('#previousButton1');
+                previousButton1.addEventListener('click', show3);
+                
+                const nextButton1 = document.querySelector('#nextButton1');
+                nextButton1.addEventListener('click', show2);
+
+                const previousButton2 = document.querySelector('#previousButton2');
+                previousButton1.addEventListener('click', show1);
+                
+                const nextButton2 = document.querySelector('#nextButton2');
+                nextButton1.addEventListener('click', show3);
+
+                const previousButton3 = document.querySelector('#previousButton3');
+                previousButton1.addEventListener('click', show2);
+                
+                const nextButton3 = document.querySelector('#nextButton3');
+                nextButton1.addEventListener('click', show1);
+
+
+            }
+
+
+            function show1() {
+                page1.style.display = 'block';
+                page2.style.display = 'none';
+                page3.style.display = 'none';
+            }
+
+            function show2() {
+                page1.style.display = 'none';
+                page2.style.display = 'block';
+                page3.style.display = 'none';
+            }
+
+            function show3() {
+                page1.style.display = 'none';
+                page2.style.display = 'none';
+                page3.style.display = 'block';
+            }
+
+        </script>
+    </body>
+</html>
