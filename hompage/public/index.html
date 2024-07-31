@@ -368,7 +368,7 @@
                 </div>
             </div>
         </div>
-        <div class="container mt-3 mb-5">
+        <div class="container mt-3 mb-4">
             <div class="row">
                 <div class="col-4 d-flex justify-content-center">
                     <div class="icon-circle">
@@ -382,72 +382,165 @@
                 </div>
             </div>
         </div>
-        <div class="text-center info-container">
+        <div class="text-center info-container p-4 m-1">
             <p class="sub-title en fs-6 mb-1 crimson">INFORMATION</p>
-            <h2 class="title fs-5 mb-5">예식정보 및 안내사항</h2>
-            <div class="p-3">
-                <div class="card text-center">
-                    <div class="card-header card-background rounded-top">
-                      <ul class="nav nav-tabs card-header-tabs">
-                        <li class="nav-item">
-                          <a class="nav-link active" href="#">포토부스</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">식사안내</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link">주차안내</a>
-                        </li>
-                      </ul>
+            <h2 class="title fs-5 mb-4">예식정보 및 안내사항</h2>
+            <div class="d-flex justify-content-center">
+                <div class="p-3" style="max-width: 490px;">
+                    <div class="card text-center p-1">
+                        <div class="card-header card-background rounded-top">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                            <a class="nav-link active" href="#">포토부스</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="#">식사안내</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link">주차안내</a>
+                            </li>
+                        </ul>
+                        </div>
+                        <div class="card-body m-3">
+                            <img src="images/photo.jpg" alt="">
+                            <p class="card-text">포토부스가 설치될 예정입니다.</p>
+                            <p class="card-text">귀한 발검음 해주신 여러분의</p>
+                            <p class="card-text">환한 미소와 따뜻한 말씀 남겨주시면</p>
+                            <p class="card-text">소중히 간직하도록 하겠습니다.</p>
+                        </div>
                     </div>
-                    <div class="card-body">
-                      <img src="images/photo.jpg" alt="">
-                      <p class="card-text">포토부스가 설치될 예정입니다.</p>
-                      <p class="card-text">귀한 발검음 해주신 여러분의</p>
-                      <p class="card-text">환한 미소와 따뜻한 말씀 남겨주시면</p>
-                      <p class="card-text">소중히 간직하도록 하겠습니다.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
+                </div>
             </div>
         </div>
 
-        <div>
-            <div class="card text-center mb-3" style="width: 18rem;">
+        <div class="d-flex flex-column align-items-center">
+            <div class="d-flex align-items-center card text-center mb-5" style="width: 18rem;">
+                <span class="card-title card-span">피로연 안내</span>
                 <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                  <p class="card-text">예식에 참석하기 어려운 분들을 위해</p>
+                  <p class="card-text">작은 피로연 자리를 마련했습니다.</p>
+                  <p class="card-text">제주시 서광로 112, 아젠토 피오레</p>
+                  <p class="card-text">2024.11.20</p>
+                  <a href="#" class="btn btn-outline-primary">피로연장 지도 보기</a>
                 </div>
               </div>
 
-              <div class="card text-center mb-3" style="width: 18rem;">
+              <div class="d-flex align-items-center card text-center mb-3" style="width: 18rem;">
+                <span class="card-title card-span">참석 의사 전달</span>
                 <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                  <p class="card-text">축하의마음으로 참석해주시는</p>
+                  <p class="card-text">모든 분들을 귀하게 모실 수 있도록</p>
+                  <p class="card-text">참석 의사를 전달 부탁드립니다.</p>
+                  <a href="#" class="btn btn-outline-primary">참석의사 전달하기</a>
                 </div>
               </div>
         </div>
 
-        <div>
-            <p>마음을 전하 실곳</p>
-            <div>신랑측 계좌번호</div>
-            <div>신부측 계좌 번호</div>
+        <div class="c-account fade-in" style="opacity: 1;transform: translate(0px, 0px);">
+            <div class="item">
+                <div class="title">
+                    <div>
+                        신랑측 계좌번호
+                    </div>
+                    <div class="arrow-up-man arrow" onclick="showManTogle()">
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+                    </div>
+                </div>
+                <div class="text gothic man-account" style="height: 0px; display: none;" >
+                    <div class="inner">
+                        <span>
+                            <span class="bank">신한</span>
+                            <span>110-123-456789</span>
+                        </span>
+                        <br>
+                        <span>최재만</span>
+                    </div>
+                    <div>
+                        <div class="btn-action">
+                            복사
+                        </div> 
+                    </div>
+                </div>
+                <div class="text gothic man-account" style="height: 0px; display: none;">
+                    <div class="inner">
+                        <span>
+                            <span class="bank">신한</span>
+                            <span>110-123-456789</span>
+                        </span><br>
+                        <span>최도현</span>
+                    </div>
+                    <div>
+                        <div class="btn-action">
+                            복사
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <div>
+                        신부측 계좌번호
+                    </div>
+                    <div class="arrow-up-woman arrow" onclick="showWomanToggle()">
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+                    </div>
+                </div>
+                <div class="text gothic woman-account" style="height: 0px; display: none;">
+                    <div class="inner">
+                        <span>
+                            <span class="bank">국민</span>
+                            <span>200123-45-678900</span>
+                        </span><br>
+                        <span>이하나</span>
+                    </div>
+                    <div>
+                        <div class="btn-action">복사</div>
+                        <div class="btn-action kakaopay">
+                            <img src="/mcard/assets/images/icon-kakaopay.png">
+                        </div>
+                    </div>
+                </div>
+                <div class="text gothic woman-account" style="height: 0px; display: none;">
+                    <div class="inner">
+                        <span>
+                            <span class="bank">신한</span>
+                            <span>110-123-456789</span>
+                        </span><br>
+                        <span>이승태</span>
+                    </div>
+                    <div>
+                        <div class="btn-action">복사</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div>
+        <div class="text-center mt-5 p-5">
             <span>GUESTBOOK</span>
             <h3>방명록</h3>
-            <div>
-                <div>첫번째 축하 글을 남겨주세요</div>
+            <div class="container-guestbook mt-5">
+                <div>
+                    <i class="fa-solid fa-file-signature"></i>
+                </div>
+                <div class="empty">첫번째 축하 글을 남겨주세요</div>
             </div>
-            <button type="button" class="btn">작성하기</button>
+
+            <button type="button" class="btn btn-outline-primary mt-3" style="width: 100px; float: right;">작성하기</button>
         </div>
 
-        <div>축하 화환 보내기</div>
-
-        <img src="images/main_photo.jpg" alt="">
+        <div >
+            <div class="text-center">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">FROM. ${data.name}</h5>
+                        <small>${data.date}</small>
+                    </div>
+                    <p class="mb-1">${data.text}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
         
         <div>
             <button>카카오톡 공유하기</button>
@@ -456,7 +549,7 @@
         
         <address> &copy;저작권 관련 정보를 작성해도 상관 없습니다.</address>
     </div>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0aa361740fabbc0c74b6275846cf3ba8"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cfd3ae1e08d110870025655034d912b1"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
@@ -472,6 +565,55 @@
         });
 
         marker.setMap(map);
+        
+        let isManAccount = false;
+        let isWomanAccount = false; 
+
+        function showManTogle() {
+            const manEls = document.querySelectorAll('.man-account');
+            const arrowUp = document.querySelector('.arrow-up-man');
+            arrowUp.classList.toggle('rotate');
+
+            if (isManAccount) {
+                isManAccount = false; 
+                manEls.forEach(manEl => {
+                    manEl.style.display = 'none';
+                    manEl.style.height = '0px';
+                });
+
+            } else if (!isManAccount) {
+                isManAccount = true;
+                manEls.forEach(manEl => {
+                    manEl.style.display = 'block';
+                    manEl.style.height = '77px';
+                });
+
+            }
+        }
+        function showWomanToggle() {
+            const womanEls = document.querySelectorAll('.woman-account');
+            const arrowUp = document.querySelector('.arrow-up-woman');
+
+            arrowUp.classList.toggle('rotate');
+
+            if (isWomanAccount) {
+                isWomanAccount = false;
+                womanEls.forEach(womanEl => {                
+                    womanEl.style.display = 'none';
+                    womanEl.style.height = '0px';
+                });
+
+
+            } else if (!isWomanAccount) {
+                isWomanAccount = true;
+                womanEls.forEach(womanEl => {                
+                    womanEl.style.display = 'block';
+                    womanEl.style.height = '77px';
+                });
+
+
+            }
+        }
         </script>
 </body>
 </html>

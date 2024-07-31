@@ -352,3 +352,97 @@ img {
     color: var(--title-text-color);
 }
 
+.card-span {
+    margin-top: -20px;
+    color: var(--text-dark-color);
+    background-color: var(--border-color);
+    border-radius: 100px;
+    width: 120px;
+    border: 1px solid var(--border-color);
+    font-size: .9rem;
+}
+
+.c-account {
+    max-width: 100%;
+    margin: 2rem auto 0;
+    max-width: 350px;
+    font-size: 0.9rem;
+    padding: 0 1.1rem;
+}
+
+.c-account .item {
+    margin: 10px;
+}
+
+.c-account .title {
+    position: relative;
+    margin: 0 auto;
+
+    padding: 8px 0;
+    text-align: center;
+    cursor: pointer;
+    z-index: 999;
+    color: var(--text-dark-color);
+    background: var(--third-bg-color);
+    border-radius: 6px;
+}
+
+.c-account .title.expand {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.c-account .title>.arrow {
+    position: absolute;
+    top: 9px;
+    right: 18px;
+    transform: rotate(0);
+    transition-duration: .5s;
+    transform-origin: center center;
+}
+
+.c-account .title>.arrow.rotate {
+    top: 8px;
+    transform: rotate(180deg);
+    transition-duration: .5s;
+}
+
+.c-account .text:nth-child(2) {
+    border-top: 0;
+}
+
+.c-account .text {
+    position: relative;
+    overflow: hidden;
+    transition: .5s ease-out;
+    font-size: min(.85rem, 16px);
+    border-top: 1px solid rgba(0, 0, 0, .05);
+}
+
+.c-account .text>.inner {
+    padding: .75rem 0 .75rem .85rem;
+    line-height: 26px;
+    letter-spacing: 0;
+    text-align: left;
+    background: var(--fourth-bg-color);
+}
+
+.container-guestbook {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+    background: hsla(0, 0%, 100%, .75);
+    padding: 0 var(--common-margin-lr);
+    border: var(--border-size) solid var(--border-color);
+    border-left: 0;
+    border-right: 0;
+}
+
+.empty {
+    text-align: center;
+    color: #aaa;
+    pad: 40px 0;
+    
+}
