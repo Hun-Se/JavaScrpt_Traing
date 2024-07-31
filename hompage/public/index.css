@@ -13,6 +13,7 @@
     --btn-text-color: #978686;
     --btn-border-color: #d1c8c8;
     --third-bg-color: #f2eeee;
+    --btn-dark-bg-color: #d0b9b9;
 }
 
 * {
@@ -445,4 +446,89 @@ img {
     color: #aaa;
     pad: 40px 0;
     
+}
+
+
+#addGuestBookModalLabel {
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: #000;
+}
+
+.c-guestbook-modal-inner {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.c-guestbook-modal-inner table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.c-guestbook-modal-inner  tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    unicode-bidi: isolate;
+    border-color: inherit;
+}
+
+.c-guestbook-modal-inner tr {
+    border-top: 1px solid #eee;
+}
+
+.btn-submit-guest {
+    background-color: var(--btn-dark-bg-color) !important;
+
+    height: auto;
+}
+
+.c-guestbook-modal-inner th {
+    padding: 0 0 0 20px;
+    height: 60px;
+    vertical-align: middle;
+    font-size: .9rem;
+    font-weight: 500;
+    color: #989898;
+}
+
+.c-guestbook-modal-inner td {
+    padding: 0;
+}
+
+.c-guestbook-modal-inner td input, .c-guestbook-modal-inner td textarea {
+    border: none;
+    padding: 0 10px;
+    width: calc(100% - 20px);
+    height: 40px;
+    color: #000;
+    font-size: 16px;
+    font-family: var(--font-gothic);
+    letter-spacing: var(--font-gothic-spacing);
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: none;
+    -webkit-border-radius: 0;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.c-guestbook-modal-inner td input, .c-guestbook-modal-inner td textarea {
+    border: none;
+    padding: 0 10px;
+    width: calc(100% - 20px);
+    height: 40px;
+    color: #000;
+    font-size: 16px;
+    font-family: var(--font-gothic);
+    letter-spacing: var(--font-gothic-spacing);
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: none;
+    -webkit-border-radius: 0;
+    box-sizing: border-box;
+    vertical-align: top;
 }

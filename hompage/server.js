@@ -30,5 +30,41 @@ BigInt.prototype.toJSON = () => {
 const router = express.Router();
 app.use('/', router);
 
+router.route('/')
 
+router.route('/guestbook/add').post(async (req, res) => {
+    let conn;
+
+    let body = req.body
+
+    try {
+        conn = await pool.getConnection();
+        const sql = `insert into test.test(name, date, content) values ('${body.name}', ${body.date}, '${body.content}')`
+        const rows = await conn.query(sql,[]);
+
+        const output = {
+            code: 200,
+            message: 'OK',
+            header: {},
+            data: rows
+        }
+        
+        res.writeHead(200, {'Content-Type':'text/html;charset=utf8'});
+        res.end(JSON.stringify(output));
+
+    } catch (err) {
+        const output = {
+            code: 400,
+            message: `에러 : ${err}`, 
+        }
+                
+        res.writeHead(200, {'Content-Type':'text/html;charset=utf8'});
+        res.end(JSON.stringify(output));
+
+    } finally {
+        if (con) {
+            conn.end();
+        }
+    }
+})
 

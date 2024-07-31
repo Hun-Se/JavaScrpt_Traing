@@ -9,9 +9,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "express": "^4.19.2",
+    "hompage": "file:",
     "mariadb": "^3.3.1"
-  }
+  },
+  "description": ""
 }

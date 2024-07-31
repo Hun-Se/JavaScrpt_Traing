@@ -525,22 +525,10 @@
                 <div class="empty">첫번째 축하 글을 남겨주세요</div>
             </div>
 
-            <button type="button" class="btn btn-outline-primary mt-3" style="width: 100px; float: right;">작성하기</button>
+            <button type="button" class="btn btn-outline-primary mt-3" style="width: 100px; float: right;" data-bs-toggle="modal" data-bs-target="#addGuestBookModal">작성하기</button>
         </div>
 
-        <div >
-            <div class="text-center">
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">FROM. ${data.name}</h5>
-                        <small>${data.date}</small>
-                    </div>
-                    <p class="mb-1">${data.text}</p>
-                    </a>
-                </div>
-            </div>
-        </div>
+        
         
         <div>
             <button>카카오톡 공유하기</button>
@@ -549,22 +537,89 @@
         
         <address> &copy;저작권 관련 정보를 작성해도 상관 없습니다.</address>
     </div>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cfd3ae1e08d110870025655034d912b1"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <script>
+    <!-- Modal -->
+<div class="modal fade" id="addGuestBookModal" tabindex="-1" aria-labelledby="addGuestBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addGuestBookModalLabel">방명록 작성하기</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div >
+                <div class="text-center">
+                    <div class="list-group">
+                        <div class="d-flex w-100 justify-content-between">
+                            <div onselectstart="return false" class="c-guestbook-modal-wrap">
+                                <div class="c-guestbook-modal-inner">
+                                    <table>
+                                        <colgroup>
+                                            <col style="width: 100px;">
+                                            <col>
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th>이름</th>
+                                                <td>
+                                                    <input class="input-name" type="text" maxlength="12" placeholder="">
+                                                </td>
+                                            </tr> 
+                                            <tr>
+                                                <th>내용</th>
+                                                    <td colspan="2">
+                                                        <textarea class="input-textarea" maxlength="100" placeholder="100자 이내로 작성해주세요"></textarea>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
+            <button id="addBtn" type="button" class="btn btn-submit-guest">작성하기</button>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cfd3ae1e08d110870025655034d912b1"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/hompage/moment.min.js"></script>
+    
+    let addBtn;
+    window.document.addEventListener('DOMContentLoaded', () => {
+   fffffffffffffffffffffffffffffffffffffffffff     addBtn = document.querySelector('#addBtn');
+        
+        
         var container = document.getElementById('map');
         var options = { 
             center: new kakao.maps.LatLng(33.484864594123856, 126.48855923312743), 
             level: 3
         };
-        var map = new kakao.maps.Map(container, options); 
-        var markerPosition  = new kakao.maps.LatLng(33.484864594123856, 126.48855923312743); 
-        var marker = new kakao.maps.Marker({
-            position: markerPosition
+            var map = new kakao.maps.Map(container, options); 
+            var markerPosition  = new kakao.maps.LatLng(33.484864594123856, 126.48855923312743); 
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+            
+            marker.setMap(map);
+            addBtn.addEventListener('click', () => {
+                const name = document.querySelector('.input-name');
+                const content = document.querySelector('.input-name');
+                const 
+                const url = 'http://localhost:7001'
+                axios.post(url + '/guestbook/add', {})
+            }) 
         });
-
-        marker.setMap(map);
+        
         
         let isManAccount = false;
         let isWomanAccount = false; 
@@ -614,6 +669,12 @@
 
             }
         }
+
+
+        
         </script>
+
+
+        
 </body>
 </html>
