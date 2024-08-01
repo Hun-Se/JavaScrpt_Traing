@@ -2,45 +2,76 @@ const http = require('http');
 const express = require('express');
 const path = require('path');
 const mariadb = require('mariadb');
-const exp = require('constants');
+const multer = require('multer');
 
-const pool = mariadb.createPool(
-    {
-        host: 'localhost',
-        port:4406,
-        user:'root',
-        password: 'admin',
-    }
-);
-
-const app = express();
-
-const port = 7001;
-
-http.createServer(app).listen(port, () => {
-    console.log(`웹서버 실행됨 ${port}`);
+const pool = mariadb.createPool({
+    host: 'localhost',
+    port: 4406,
+    user: 'root',
+    password: 'admin',
+    database: 'test'
 });
 
-app.use('/', express.static(path.join(__dirname, 'public')));
+const app = express();
+const port = 7001;
 
 BigInt.prototype.toJSON = () => {
     return this.toString();
 }
+const upload = multer(); 
+
+app.use('/', express.static(path.join(__dirname, 'public')));
+
 
 const router = express.Router();
 app.use('/', router);
 
-router.route('/')
-
-router.route('/guestbook/add').post(async (req, res) => {
+router.post('/guestbook/add', upload.none(), async (req, res) => {
     let conn;
-
-    let body = req.body
+    let body = req.body;
+    console.log(req.body);
 
     try {
         conn = await pool.getConnection();
-        const sql = `insert into test.test(name, date, content) values ('${body.name}', ${body.date}, '${body.content}')`
-        const rows = await conn.query(sql,[]);
+        const sql = `insert into test.test(name, content, date) values('${body.name}', '${body.content}', '${body.date}')`;
+        
+        const rows = await conn.query(sql, []);
+
+        const output = {
+            code: 200,
+            message: 'OK',
+            header: {},
+            data: rows
+        };
+        res.writeHead(200, {'Content-Type':'text/httml;charset=utf8'});
+        res.end(JSON.stringify(output));
+
+    } catch (err) {
+        const output = {
+            code: 400,
+            message: `에러 : ${err}`
+        };
+
+        res.writeHead(200, {'Content-Type':'text/httml;charset=utf8'});
+        res.end(JSON.stringify(output));
+
+    } finally {
+        if (conn) {
+            conn.end();
+        }
+    }
+});
+
+router.route('/guestbook/list').get(async (req, res) => {
+    let con;
+
+    try {
+        // 데이터베이스 연결 가져오기
+        conn = await pool.getConnection();
+        
+        // SQL문 실행하기
+        const sql = `select id, name, content, date from test.test`;
+        const rows =await conn.query(sql, []);
 
         const output = {
             code: 200,
@@ -48,23 +79,25 @@ router.route('/guestbook/add').post(async (req, res) => {
             header: {},
             data: rows
         }
-        
-        res.writeHead(200, {'Content-Type':'text/html;charset=utf8'});
+    
+        res.writeHead(200, {'Content-Type':'text/httml;charset=utf8'});
         res.end(JSON.stringify(output));
-
-    } catch (err) {
+    } catch (err){
         const output = {
             code: 400,
-            message: `에러 : ${err}`, 
+            message: `에러 : ${err}`,
         }
-                
-        res.writeHead(200, {'Content-Type':'text/html;charset=utf8'});
+    
+        res.writeHead(200, {'Content-Type':'text/httml;charset=utf8'});
         res.end(JSON.stringify(output));
-
     } finally {
+        // 데이터베이스 연결 풀로 연결 반환하기
         if (con) {
             conn.end();
         }
     }
 })
 
+http.createServer(app).listen(port, () => {
+    console.log(`웹서버 실행됨 ${port}`);
+});

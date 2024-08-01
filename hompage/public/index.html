@@ -524,11 +524,9 @@
                 </div>
                 <div class="empty">첫번째 축하 글을 남겨주세요</div>
             </div>
-
-            <button type="button" class="btn btn-outline-primary mt-3" style="width: 100px; float: right;" data-bs-toggle="modal" data-bs-target="#addGuestBookModal">작성하기</button>
+            
+            <button id="open-modal" type="button" class="btn btn-outline-primary mt-3" style="width: 100px; float: right;" data-bs-toggle="modal" data-bs-target="#addGuestBookModal">작성하기</button>
         </div>
-
-        
         
         <div>
             <button>카카오톡 공유하기</button>
@@ -540,7 +538,7 @@
 
     <!-- Modal -->
 <div class="modal fade" id="addGuestBookModal" tabindex="-1" aria-labelledby="addGuestBookModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered" id="dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="addGuestBookModalLabel">방명록 작성하기</h1>
@@ -568,7 +566,7 @@
                                             <tr>
                                                 <th>내용</th>
                                                     <td colspan="2">
-                                                        <textarea class="input-textarea" maxlength="100" placeholder="100자 이내로 작성해주세요"></textarea>
+                                                        <textarea class="input-content" maxlength="100" placeholder="100자 이내로 작성해주세요"></textarea>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -583,45 +581,89 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
-            <button id="addBtn" type="button" class="btn btn-submit-guest">작성하기</button>
+            <button id="closeBtn" type="button" class="btn btn-secondary " data-bs-dismiss="modal">닫기</button>
+            <button id="addBtn" type="button" data-bs-dismiss="modal" class="btn btn-submit-guest">작성하기</button>
         </div>
+
+
     </div>
 </div>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cfd3ae1e08d110870025655034d912b1"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="/hompage/moment.min.js"></script>
-    
-    let addBtn;
+
+<script type="">
+
     window.document.addEventListener('DOMContentLoaded', () => {
-   fffffffffffffffffffffffffffffffffffffffffff     addBtn = document.querySelector('#addBtn');
-        
-        
         var container = document.getElementById('map');
         var options = { 
             center: new kakao.maps.LatLng(33.484864594123856, 126.48855923312743), 
             level: 3
         };
-            var map = new kakao.maps.Map(container, options); 
-            var markerPosition  = new kakao.maps.LatLng(33.484864594123856, 126.48855923312743); 
-            var marker = new kakao.maps.Marker({
-                position: markerPosition
-            });
-            
-            marker.setMap(map);
-            addBtn.addEventListener('click', () => {
-                const name = document.querySelector('.input-name');
-                const content = document.querySelector('.input-name');
-                const 
-                const url = 'http://localhost:7001'
-                axios.post(url + '/guestbook/add', {})
-            }) 
+        var map = new kakao.maps.Map(container, options); 
+        var markerPosition  = new kakao.maps.LatLng(33.484864594123856, 126.48855923312743); 
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
         });
+            
+        marker.setMap(map);
+
+        requestList();
+
+
+        const openModal = document.querySelector('#open-modal');
+        const modalElement = document.querySelector('#addGuestBookModal');
+        const addBtn = document.querySelector('#addBtn');
+
+        addBtn.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const name = document.querySelector('.input-name').value;
+            const content = document.querySelector('.input-content').value; // Assuming you have a class 'input-content'
+            const url = 'http://localhost:7001';
+            const today = moment();
+            const formData = new FormData();
+
+            formData.append('name', name);
+            formData.append('content', content);
+            formData.append('date', today.format('YYYY-MM-DD'));
+            
+            try {
+                await axios.post('http://localhost:7001/guestbook/add', formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+            } catch (err) {
+                console.log(err);
+            }
+
+            requestList();
+
+        });
+
         
+        if (openModal && modalElement) {
+            const addModal = new bootstrap.Modal(modalElement);
+            openModal.addEventListener('click', function() {
+                console.log('hi');
+                addModal.show();
+            });
+
+            addBtn.addEventListener('click', function() {
+                console.log("닫혀라");
+                const addModal = new bootstrap.Modal(modalElement);
+                addModal.hide();
+            });
+
+            closeBtn.ad
+        } else {
+            console.error('Modal or button element not found');
+        }
+
+        });
+    
         
-        let isManAccount = false;
+        let isManAount = false;
         let isWomanAccount = false; 
 
         function showManTogle() {
@@ -670,7 +712,18 @@
             }
         }
 
+        async function requestList () {
+            try {
+                const response = await axios.get('http://localhost:7001/guestbook/list');
+                console.log(response.data)
+            } catch (err) {
+                console.log(err);
+            }
 
+            const empty = document.querySelector('.empty');
+            empty.innerHTML = ``
+
+        }
         
         </script>
 

@@ -118,3 +118,42 @@ router.route('/person/add').get(async (req, res) => {
         }
     }
 });
+
+
+
+router.route('/menu/list').get(async (req, res) => {
+
+    let con;
+
+    try {
+        // 데이터베이스 연결 가져오기
+        conn = await pool.getConnection();
+        
+        // SQL문 실행하기
+        const sql = `select id, name, details, color, icon from test.menu`;
+        const rows =await conn.query(sql, []);
+
+        const output = {
+            code: 200,
+            message: 'OK',
+            header: {},
+            data: rows
+        }
+    
+        res.writeHead(200, {'Content-Type':'text/httml;charset=utf8'});
+        res.end(JSON.stringify(output));
+    } catch (err){
+        const output = {
+            code: 400,
+            message: `에러 : ${err}`,
+        }
+    
+        res.writeHead(200, {'Content-Type':'text/httml;charset=utf8'});
+        res.end(JSON.stringify(output));
+    } finally {
+        // 데이터베이스 연결 풀로 연결 반환하기
+        if (con) {
+            conn.end();
+        }
+    }
+});
