@@ -71,7 +71,7 @@ router.route('/guestbook/list').get(async (req, res) => {
         
         // SQL문 실행하기
         const sql = `select id, name, content, date from test.test`;
-        const rows =await conn.query(sql, []);
+        const rows = await conn.query(sql, []);
 
         const output = {
             code: 200,

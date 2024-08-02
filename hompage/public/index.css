@@ -441,6 +441,10 @@ img {
     border-right: 0;
 }
 
+.container-guestbook .start {
+    justify-content: start;
+}
+
 .empty {
     text-align: center;
     color: #aaa;

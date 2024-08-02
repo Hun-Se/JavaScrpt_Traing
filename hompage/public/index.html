@@ -495,9 +495,6 @@
                     </div>
                     <div>
                         <div class="btn-action">복사</div>
-                        <div class="btn-action kakaopay">
-                            <img src="/mcard/assets/images/icon-kakaopay.png">
-                        </div>
                     </div>
                 </div>
                 <div class="text gothic woman-account" style="height: 0px; display: none;">
@@ -523,6 +520,8 @@
                     <i class="fa-solid fa-file-signature"></i>
                 </div>
                 <div class="empty">첫번째 축하 글을 남겨주세요</div>
+                <ul class="list-group p-2 container-list-guestBook">
+                </ul>
             </div>
             
             <button id="open-modal" type="button" class="btn btn-outline-primary mt-3" style="width: 100px; float: right;" data-bs-toggle="modal" data-bs-target="#addGuestBookModal">작성하기</button>
@@ -663,7 +662,7 @@
         });
     
         
-        let isManAount = false;
+        let isManAccount = false;
         let isWomanAccount = false; 
 
         function showManTogle() {
@@ -715,13 +714,34 @@
         async function requestList () {
             try {
                 const response = await axios.get('http://localhost:7001/guestbook/list');
-                console.log(response.data)
+                
+                response.data.data.forEach(data => {
+                    const el = document.querySelector('.container-guestbook'); 
+                    el.classList.add(' start');
+
+                    const html = `<li class="list-group-item">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold text-start border-bottom">${data.name}</div>
+                            <div class="text-start">${data.content}</div>
+                        </div>
+                            <div class="text-end">
+                            <span>${data.date}</span>
+                            </div>
+                        </li>`
+
+                    const ul = document.querySelector('container-list-guestBook');
+                    ul.innerHtml = html;
+
+                    
+                });
+
+                console.log(response.data)   
+                const empty = document.querySelector('.empty');
+                
+                
             } catch (err) {
                 console.log(err);
             }
-
-            const empty = document.querySelector('.empty');
-            empty.innerHTML = ``
 
         }
         
