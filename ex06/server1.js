@@ -84,6 +84,11 @@ router.route('/person/add').get(async (req, res) => {
     const parmas = req.query;
     console.log(`요청파라미터 -> ${JSON.stringify(parmas)}`);
 
+    const date = moment("2023-06-23");
+
+    date.format("YYYY/MM/DD"); // 포맷의 형식은 더 다양함
+
+
     let con;
 
     try {

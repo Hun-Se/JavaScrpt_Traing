@@ -520,11 +520,20 @@
                     <i class="fa-solid fa-file-signature"></i>
                     <div>첫번째 축하 글을 남겨주세요</div>
                 </div>
-                <ul class="list-group p-2 container-list-guestBook">
+                <ul class="list-group p-4 container-list-guestBook">
+
                 </ul>
             </div>
-            
-            <button id="open-modal" type="button" class="btn btn-outline-primary mt-3" style="width: 100px; float: right;" data-bs-toggle="modal" data-bs-target="#addGuestBookModal">작성하기</button>
+            <div class="d-flex justify-content-center">
+                <button id="open-modal" type="button" class="btn btn-outline-primary mt-3" style="width: 300px;" data-bs-toggle="modal" data-bs-target="#addGuestBookModal">작성하기</button>
+            </div>
+            <nav class="guestBook-nav d-flex justify-content-center" aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li id="prev" class="page-item "><a class="page-link" href="#">이전</a></li>
+                  <li id="next" class="page-item"><a class="page-link" href="#">다음</a></li>
+                </ul>
+            </nav>
+           
         </div>
         
         <div>
@@ -594,7 +603,8 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script type="">
-
+    let btnType;
+    let dataId;
     window.document.addEventListener('DOMContentLoaded', () => {
         var container = document.getElementById('map');
         var options = { 
@@ -614,7 +624,17 @@
 
         const openModal = document.querySelector('#open-modal');
         const modalElement = document.querySelector('#addGuestBookModal');
+        const modalTitle = document.querySelector('#addGuestBookModalLabel');
         const addBtn = document.querySelector('#addBtn');
+
+
+
+        openModal.addEventListener('click', (event) => {
+            event.preventDefault();
+            modalTitle.innerText = '방명록 작성하기';
+            addBtn.innerText = '작성하기';
+            btnType = 'add';
+        }) 
 
         addBtn.addEventListener('click', async (event) => {
             event.preventDefault();
@@ -624,135 +644,216 @@
             const today = moment();
             const formData = new FormData();
 
+
             formData.append('name', name);
             formData.append('content', content);
             formData.append('date', today.format('YYYY-MM-DD'));
-            
-            try {
-                await axios.post('http://localhost:7001/guestbook/add', formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' }
-                });
-            } catch (err) {
-                console.log(err);
+
+            if (btnType == 'add') {
+                try {
+                    await axios.post('http://localhost:7001/guestbook/add', formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    });
+                } catch (err) {
+                    console.log(err);
+                }
+            } else if (btnType == 'edit') {
+                try {
+                    formData.append('id', dataId);
+                    await axios.post('http://localhost:7001/guestbook/edit', formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    });
+                } catch (err) {
+                    console.log(err);
+                }
             }
+            
 
             requestList();
 
         });
 
-        
-        if (openModal && modalElement) {
-            const addModal = new bootstrap.Modal(modalElement);
-            openModal.addEventListener('click', function() {
-                console.log('hi');
-                addModal.show();
+    });
+    
+    
+    let isManAccount = false;
+    let isWomanAccount = false; 
+
+    function showManTogle() {
+        const manEls = document.querySelectorAll('.man-account');
+        const arrowUp = document.querySelector('.arrow-up-man');
+        arrowUp.classList.toggle('rotate');
+
+        if (isManAccount) {
+            isManAccount = false; 
+            manEls.forEach(manEl => {
+                manEl.style.display = 'none';
+                manEl.style.height = '0px';
             });
 
-            addBtn.addEventListener('click', function() {
-                console.log("닫혀라");
-                const addModal = new bootstrap.Modal(modalElement);
-                addModal.hide();
+        } else if (!isManAccount) {
+            isManAccount = true;
+            manEls.forEach(manEl => {
+                manEl.style.display = 'block';
+                manEl.style.height = '77px';
             });
 
-            closeBtn.ad
-        } else {
-            console.error('Modal or button element not found');
+        }
+    }
+
+    function showWomanToggle() {
+        const womanEls = document.querySelectorAll('.woman-account');
+        const arrowUp = document.querySelector('.arrow-up-woman');
+
+        arrowUp.classList.toggle('rotate');
+
+        if (isWomanAccount) {
+            isWomanAccount = false;
+            womanEls.forEach(womanEl => {                
+                womanEl.style.display = 'none';
+                womanEl.style.height = '0px';
+            });
+
+
+        } else if (!isWomanAccount) {
+            isWomanAccount = true;
+            womanEls.forEach(womanEl => {                
+                womanEl.style.display = 'block';
+                womanEl.style.height = '77px';
+            });
+
+
+        }
+    }
+
+    const itemsPerPage = 3; // 페이지네이션 개수
+    let data; // 응답할 데이터를 쪼개기
+    let currentPage = 1; //현재 페이지
+    let totalPages; // 총합 페이지
+
+    async function requestList () {
+        try {
+            const response = await axios.get('http://localhost:7001/guestbook/list');
+            totalPages = Math.ceil(response.data.data.length / itemsPerPage);
+            data = response.data.data;
+            updateContent(currentPage);
+            createPagination();
+        } catch (err) {
+            console.log(err);
         }
 
-        });
-    
-        
-        let isManAccount = false;
-        let isWomanAccount = false; 
+    }
 
-        function showManTogle() {
-            const manEls = document.querySelectorAll('.man-account');
-            const arrowUp = document.querySelector('.arrow-up-man');
-            arrowUp.classList.toggle('rotate');
+    function updateContent(page) {
+        const start = (page-1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const pageItems = data.slice(start, end);
+        const empty = document.querySelector('.empty');
 
-            if (isManAccount) {
-                isManAccount = false; 
-                manEls.forEach(manEl => {
-                    manEl.style.display = 'none';
-                    manEl.style.height = '0px';
-                });
+        if (data && data.length > 0) {
+                empty.style.display = 'none';
 
-            } else if (!isManAccount) {
-                isManAccount = true;
-                manEls.forEach(manEl => {
-                    manEl.style.display = 'block';
-                    manEl.style.height = '77px';
-                });
+                const ul = document.querySelector('.container-list-guestBook');
+                while(ul.firstChild) {
+                    ul.firstChild.remove();
+                }
 
-            }
-        }
-        function showWomanToggle() {
-            const womanEls = document.querySelectorAll('.woman-account');
-            const arrowUp = document.querySelector('.arrow-up-woman');
+                pageItems.forEach(data => {
+                    const el = document.querySelector('.container-guestbook'); 
+                    el.classList.add('start');
 
-            arrowUp.classList.toggle('rotate');
+                    const date = moment(data.date).format("YYYY-MM-DD");
 
-            if (isWomanAccount) {
-                isWomanAccount = false;
-                womanEls.forEach(womanEl => {                
-                    womanEl.style.display = 'none';
-                    womanEl.style.height = '0px';
-                });
-
-
-            } else if (!isWomanAccount) {
-                isWomanAccount = true;
-                womanEls.forEach(womanEl => {                
-                    womanEl.style.display = 'block';
-                    womanEl.style.height = '77px';
-                });
-
-
-            }
-        }
-
-        async function requestList () {
-            try {
-                const response = await axios.get('http://localhost:7001/guestbook/list');
-                const empty = document.querySelector('.empty');
-                console.log(response.data.data);
-                if (response.data.data && response.data.data.length > 0) {
-                    empty.style.display = 'none';
-                    response.data.data.forEach(data => {
-                        const el = document.querySelector('.container-guestbook'); 
-                        el.classList.add('start');
-
-                        const date = moment(data.date).format("YYYY-MM-DD");
-
-    
-                        const html = `<li class="list-group-item">
+                    ul.innerHTML += `<li class="list-group-item list-gusetBook">
                             <div class="ms-2 me-auto">
-                                <div class="fw-bold text-start border-bottom">${data.name}</div>
+                                <div class="fw-bold text-start border-bottom d-flex justify-content-between">
+                                    <div>${data.name}</div>
+                                    <div class="container-btn-guestBook">
+                                        <button class="btn guest-btn-edit edit-btn" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#addGuestBookModal">수정</button>
+                                        <button class="btn guest-btn-remove" data-id="${data.id}">삭제</button>
+                                    </div>
+                                </div>
                                 <div class="text-start">${data.content}</div>
                             </div>
-                                <div class="text-end">
-                                <span>${date}</span>
-                                </div>
-                            </li>`
-    
-                        const ul = document.querySelector('.container-list-guestBook');
-                        ul.innerHtml = html;
-    
-                        
+                            <div class="text-end">
+                            <span>${date}</span>
+                            </div>
+                        </li>`;
+                });
+
+                //  수정 기능 추가
+                document.querySelectorAll('.edit-btn').forEach(editBtn => {
+                    editBtn.addEventListener('click', async (event) => {
+                        event.preventDefault();
+                        dataId = event.target.getAttribute('data-id');
+                        console.log(dataId);
+                        const modalElement = document.querySelector('#addGuestBookModal');
+                        const modalTitle = document.querySelector('#addGuestBookModalLabel');
+                        modalTitle.innerText = '방명록 수정하기';
+                        const addBtn = modalElement.querySelector('#addBtn');
+                        addBtn.innerText = '수정하기';
+                        btnType = 'edit';
+
+                        try {
+                            const response = await axios.get(`http://localhost:7001/guestbook/list/${dataId}`);
+                            if (response.data.code == 200) {
+                                document.querySelector('.input-name').value = response.data.data[0].name;
+                                document.querySelector('.input-content').value = response.data.data[0].content;
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }                        
+
+
                     });
-                } else {
-                    empty.style.display = 'block';
+                });
 
-                }
-                
-                
-            } catch (err) {
-                console.log(err);
+                document.querySelectorAll('.guest-btn-remove').forEach(removeBtn => {
+                    removeBtn.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        const dataId = event.target.getAttribute('data-id');
+                        console.log(dataId);
+                    });
+                });
+            } else {
+                empty.style.display = 'block';
             }
+    }
 
+    function createPagination() {
+        const paginationUl = document.querySelector('.pagination');
+
+        while (paginationUl.children.length > 2) {
+            paginationUl.removeChild(paginationUl.children[1]);
         }
-        
-        </script>
+
+        for (let i = 1; i <= totalPages; i++) {
+            const li = document.createElement('li');
+            li.className = 'page-item';
+            const a = document.createElement('a');
+            a.className = 'page-link';
+            a.href = '#';
+            a.innerText = i;
+            a.addEventListener('click', (e) => changePage(e, i));
+            li.appendChild(a);
+            paginationUl.insertBefore(li, paginationUl.children[paginationUl.children.length - 1]);
+        }
+
+        document.getElementById('prev').addEventListener('click', (e) => changePage(e, currentPage - 1));
+        document.getElementById('next').addEventListener('click', (e) => changePage(e, currentPage + 1));
+    }
+
+    function changePage(e, page) {
+        e.preventDefault();
+        if (page < 1 || page > totalPages) {
+            return;
+        }
+        currentPage = page;
+
+        updateContent(page);
+    }
+    
+</script>
 
 
         
