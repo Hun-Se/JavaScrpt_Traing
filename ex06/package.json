@@ -10,6 +10,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "ejs": "^3.1.10",
+    "ex06": "file:",
     "express": "^4.19.2",
     "mariadb": "^3.3.1"
   }
