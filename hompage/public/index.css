@@ -20,6 +20,10 @@
     font-family: "iropke", serif;
 }
 
+img {
+    max-width: 500px;
+}
+
 i {
     width: 1.125rem;
     height: 1.125rem;

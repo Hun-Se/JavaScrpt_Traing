@@ -17,7 +17,7 @@
 
     </style>
     
-    <title>Document</title>
+    <title>모바일청첩장</title>
 </head>
 <body>
     <div class="container mcard-view">
@@ -33,8 +33,8 @@
             <div class="intro-text text-center fs-6 crimson">
                 <span>WendsDay</span>
             </div>
-            <div class="mb-3">
-                <img  class="rounded-1 img-fluid" src="images/outside_together.jpg" alt="">
+            <div class="mb-3 d-flex justify-content-center">
+                <img  class="rounded-1" style="max-width: 500px; width: 100%;" src="images/outside_together.jpg" alt="">
             </div>
             <div class="name container text-center mb-3">
                 <span>김세훈</span>
@@ -228,7 +228,7 @@
             <div class="dday-wrap">
                 <div class="countdown crimson">
                     <div>
-                        <span class="card">75</span>
+                        <span class="card">108</span>
                         <div class="desc">Days</div>
                     </div> 
                     <div>
@@ -252,7 +252,7 @@
                         <span class="card">12</span>
                         <div class="desc">Sec</div>
                     </div></div>
-                <p>세훈 ❤️ 지희의 결혼식이 <span style="color: pink;">100일</span> 남았습니다.</p>
+                <p>세훈 ❤️ 지희의 결혼식이 <span style="color: pink;">108일</span> 남았습니다.</p>
             </div>
         </div>
         <div class="gallary-container container text-center p-5">
@@ -351,7 +351,7 @@
             </div>
         </div>
 
-        <div class="container mt-4 road-container">
+        <div class="container mt-5 road-container" style="width: 500px;">
             <div class="row">
                 <div class="col-4 d-flex justify-content-center">
                     <div class="icon-circle">
@@ -368,7 +368,7 @@
                 </div>
             </div>
         </div>
-        <div class="container mt-3 mb-4">
+        <div class="container mt-3 mb-5" style="width: 500px">
             <div class="row">
                 <div class="col-4 d-flex justify-content-center">
                     <div class="icon-circle">
@@ -391,10 +391,10 @@
                         <div class="card-header card-background rounded-top">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                            <a class="nav-link active" href="#">포토부스</a>
+                            <a class="nav-link active">포토부스</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link" href="#">식사안내</a>
+                            <a class="nav-link">식사안내</a>
                             </li>
                             <li class="nav-item">
                             <a class="nav-link">주차안내</a>
@@ -453,7 +453,7 @@
                             <span>110-123-456789</span>
                         </span>
                         <br>
-                        <span>최재만</span>
+                        <span>김세훈</span>
                     </div>
                     <div>
                         <div class="btn-action">
@@ -467,7 +467,7 @@
                             <span class="bank">신한</span>
                             <span>110-123-456789</span>
                         </span><br>
-                        <span>최도현</span>
+                        <span>김재경</span>
                     </div>
                     <div>
                         <div class="btn-action">
@@ -491,7 +491,7 @@
                             <span class="bank">국민</span>
                             <span>200123-45-678900</span>
                         </span><br>
-                        <span>이하나</span>
+                        <span>고지희</span>
                     </div>
                     <div>
                         <div class="btn-action">복사</div>
@@ -503,7 +503,7 @@
                             <span class="bank">신한</span>
                             <span>110-123-456789</span>
                         </span><br>
-                        <span>이승태</span>
+                        <span>고성동</span>
                     </div>
                     <div>
                         <div class="btn-action">복사</div>
@@ -536,12 +536,12 @@
            
         </div>
         
-        <div>
+        <!-- <div>
             <button>카카오톡 공유하기</button>
             <button>링크주소 복사하기</button>
         </div>
         
-        <address> &copy;저작권 관련 정보를 작성해도 상관 없습니다.</address>
+        <address> &copy;저작권 관련 정보를 작성해도 상관 없습니다.</address> -->
     </div>
 
     <!-- Modal -->
@@ -802,17 +802,24 @@
                             }
                         } catch (error) {
                             console.log(error);
-                        }                        
+                        }                     
 
 
                     });
                 });
 
                 document.querySelectorAll('.guest-btn-remove').forEach(removeBtn => {
-                    removeBtn.addEventListener('click', (event) => {
+                    removeBtn.addEventListener('click', async (event) => {
                         event.preventDefault();
                         const dataId = event.target.getAttribute('data-id');
                         console.log(dataId);
+
+                        try {
+                            await axios.delete(`http://localhost:7001/guestbook/remove/${dataId}`);
+                            requestList();
+                        } catch (error) {
+                            console.log(error);
+                        }                    
                     });
                 });
             } else {

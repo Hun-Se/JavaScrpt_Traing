@@ -22,7 +22,6 @@ const upload = multer();
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 
-
 const router = express.Router();
 app.use('/', router);
 
@@ -69,9 +68,10 @@ router.post('/guestbook/edit', upload.none(), async (req, res) => {
 
     try {
         conn = await pool.getConnection();
-        const sql = `update test.test set name = '${body.name}', content='${body.content}', date='${body.date}') where id = ${body.id}`;
+        const sql = `update test.test set name = '${body.name}', content='${body.content}', date='${body.date}' where id = ${body.id}`;
         
         const rows = await conn.query(sql, []);
+        console.log(`sql 실행결과 ${JSON.stringify(rows)}`);
 
         const output = {
             code: 200,
@@ -176,6 +176,43 @@ router.route('/guestbook/list/:id').get(async (req, res) => {
     }
 })
 
+router.route('/guestbook/remove/:id').delete(async (req, res) => {
+    let con;
+    const id = parseInt(req.params.id);
+    try {
+        // 데이터베이스 연결 가져오기
+        conn = await pool.getConnection();
+        
+        // SQL문 실행하기
+        const sql = `delete from test.test where id = ${id}`;
+        const rows = await conn.query(sql, []);
+
+        const output = {
+            code: 200,
+            message: 'OK',
+            header: {},
+            data: rows
+        }
+    
+        res.writeHead(200, {'Content-Type':'text/httml;charset=utf8'});
+        res.end(JSON.stringify(output));
+    } catch (err){
+        const output = {
+            code: 400,
+            message: `에러 : ${err}`,
+        }
+
+        console.log(err);
+    
+        res.writeHead(200, {'Content-Type':'text/httml;charset=utf8'});
+        res.end(JSON.stringify(output));
+    } finally {
+        // 데이터베이스 연결 풀로 연결 반환하기
+        if (con) {
+            conn.end();
+        }
+    }
+})
 
 http.createServer(app).listen(port, () => {
     console.log(`웹서버 실행됨 ${port}`);
